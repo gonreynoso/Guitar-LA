@@ -59,8 +59,19 @@ function App() {
 
 
   function decreaseQuantity(id) {
-    const updatedCart
+    const updatedCart = cart.map((item) => {
+      if(item.id === id && item.quantity > 0){
+        return{
+          ...item,
+          quantity: item.quantity -1,
+        }
 
+      }
+      return item
+
+    })
+   // Actualizar el estado del carrito
+   setCart(updatedCart);
   }
 
   return (
