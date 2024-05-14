@@ -58,6 +58,11 @@ function App() {
   }
 
 
+  function decreaseQuantity(id) {
+    const updatedCart
+
+  }
+
   return (
     <>
       <Header
@@ -65,6 +70,7 @@ function App() {
         removeFromCart={removeFromCart}
         increaseQuantity={increaseQuantity}
         showMaxMessage={showMaxMessage}
+        decreaseQuantity={decreaseQuantity}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
