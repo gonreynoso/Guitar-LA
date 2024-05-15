@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Guitar from "./components/Guitar";
 import { db } from "./dataBase/db";
 import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
   const [data, setData] = useState(db);
@@ -13,10 +14,15 @@ function App() {
 
   const MAX_ITEMS = 5;
 
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  });
+
   function addToCart(item) {
     const itemExist = cart.findIndex((guitar) => item.id === guitar.id);
     if (itemExist >= 0) {
       //existe en el carrito
+      if (cart[itemExist].quantity >= MAX_ITEMS) return;
       const updatedCart = [...cart];
       updatedCart[itemExist].quantity++;
       setCart(updatedCart);
@@ -43,7 +49,7 @@ function App() {
 
     const totalQuantity = updatedCart.reduce(
       (acc, item) => acc + item.quantity,
-      0
+      0,
     );
 
     // Verificar si se alcanza el máximo de unidades
@@ -51,27 +57,30 @@ function App() {
       // Aquí puedes manejar la visibilidad del mensaje
       // por ejemplo, mediante un estado
       setShowMaxMessage(true);
+    } else if (totalQuantity > MAX_ITEMS && showMaxMessage) {
+      setShowMaxMessage(false);
     }
 
     // Actualizar el estado del carrito
     setCart(updatedCart);
   }
 
-
   function decreaseQuantity(id) {
     const updatedCart = cart.map((item) => {
-      if(item.id === id && item.quantity > 0){
-        return{
+      if (item.id === id && item.quantity > 1) {
+        return {
           ...item,
-          quantity: item.quantity -1,
-        }
-
+          quantity: item.quantity - 1,
+        };
       }
-      return item
+      return item;
+    });
+    // Actualizar el estado del carrito
+    setCart(updatedCart);
+  }
 
-    })
-   // Actualizar el estado del carrito
-   setCart(updatedCart);
+  function clearCart() {
+    setCart([]);
   }
 
   return (
@@ -82,6 +91,7 @@ function App() {
         increaseQuantity={increaseQuantity}
         showMaxMessage={showMaxMessage}
         decreaseQuantity={decreaseQuantity}
+        emptyCart={clearCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
