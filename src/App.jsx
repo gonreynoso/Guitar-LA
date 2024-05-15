@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-  });
+  }, [cart]);
 
   function addToCart(item) {
     const itemExist = cart.findIndex((guitar) => item.id === guitar.id);
