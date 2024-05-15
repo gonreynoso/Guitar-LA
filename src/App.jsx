@@ -8,8 +8,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function App() {
+  //aqui verifica si el carrito esta vacio y sino lo convierte en arreglo vacio
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem("cart");
+    return localStorageCart ? JSON.parse(localStorageCart) : [];
+  };
+
   const [data, setData] = useState(db);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([initialCart]);
   const [showMaxMessage, setShowMaxMessage] = useState(false);
 
   const MAX_ITEMS = 5;
