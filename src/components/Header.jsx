@@ -1,4 +1,3 @@
-
 const Header = ({
   cart,
   removeFromCart,
@@ -9,9 +8,6 @@ const Header = ({
   isEmpty,
   cartTotal
 }) => {
-
-
-
   return (
     <header className="py-5 header">
       <div className="container-xl">
@@ -105,9 +101,7 @@ const Header = ({
                 <button
                   className="btn btn-dark w-100 mt-3 p-2"
                   onClick={clearCart}
-                >
-                  Vaciar Carrito
-                </button>
+                >Vaciar Carrito</button>
               </div>
             </div>
           </nav>
